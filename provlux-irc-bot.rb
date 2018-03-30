@@ -2,7 +2,7 @@ require 'cinch'
 
 GREETINGS_INPUT_REGEXP = /((h|H)i|(s|S)alut|(c|C)oucou|(h|H)ello|(y|Y)ellow|(P|p)lop|(B|b)onjour)(.*?)/
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
-provlux-irc-bot
+
 bot = Cinch::Bot.new do
   configure do |c|
     c.nick = ENV['BOT_NAME'] # Le nom du bot
@@ -23,7 +23,7 @@ bot = Cinch::Bot.new do
   on :message, 'ping' do |m|
     m.reply 'pong'
   end
-  
+
   on :message, 'pong' do |m|
     m.reply 'ping'
   end
@@ -38,6 +38,10 @@ bot = Cinch::Bot.new do
 
   on :message, /(.*?)shokobon(s)(.*?)/ do |m|
     m.reply "Hmmm... J'aime les shokobons"
+  end
+
+  on :message, /Je suis / do |m|
+    
   end
 end
 
