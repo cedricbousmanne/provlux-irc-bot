@@ -1,1 +1,2 @@
-bundle exec provlux-irc-bot.rb
+web: echo "foobar" > /dev/null
+bot: bundle exec ruby provlux-irc-bot.rb
