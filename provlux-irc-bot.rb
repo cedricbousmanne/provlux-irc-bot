@@ -23,6 +23,10 @@ bot = Cinch::Bot.new do
   on :message, 'ping' do |m|
     m.reply 'pong'
   end
+  
+  on :message, 'pong' do |m|
+    m.reply 'ping'
+  end
 
   on :message, /#{ENV['BOT_NAME']}( )?(\?)?/ do |m|
     m.reply 'Oui?'
