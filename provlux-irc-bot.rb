@@ -27,6 +27,10 @@ bot = Cinch::Bot.new do
   on :message, /#{BOT_NAME}( )?(\?)?/ do |m|
     m.reply 'Oui?'
   end
+
+  on :message, 'Quelle heure est-il?' do |m|
+    m.reply "Il est très exactement #{Time.now.to_s}"
+  end
 end
 
 bot.start
