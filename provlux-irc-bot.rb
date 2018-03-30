@@ -36,8 +36,8 @@ bot = Cinch::Bot.new do
     m.reply "Il est très exactement #{Time.now.to_s}"
   end
 
-  on :message, /(.*?)shokobon(s)(.*?)/ do |m|
-    m.reply "Hmmm... J'aime les shokobons"
+  on :message, /(.*?)(shokobon|cookie|bonbon)(s)?(.*?)?/ do |m, _, sweet_name|
+    m.reply "Hmmm... J'aime les #{sweet_name}s"
   end
 
   on :message, /^Je suis (\S+)$/i do |m, dad_joke_surname|
