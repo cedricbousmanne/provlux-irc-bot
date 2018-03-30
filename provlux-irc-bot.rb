@@ -40,7 +40,7 @@ bot = Cinch::Bot.new do
     m.reply "Hmmm... J'aime les shokobons"
   end
 
-  on :message, /^Je suis \S+$/i do |m, dad_joke_surname|
+  on :message, /^Je suis (\S+)$/i do |m, dad_joke_surname|
     m.reply "Bonjour #{dad_joke_surname}, je suis #{ENV['BOT_NAME']}"
   end
 end
