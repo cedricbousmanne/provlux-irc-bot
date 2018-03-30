@@ -1,0 +1,31 @@
+require 'cinch'
+
+GREETINGS_INPUT_REGEXP = /((h|H)i|(s|S)alut|(c|C)oucou|(h|H)ello|(y|Y)ellow|(P|p)lop)(.*?)/
+GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
+BOT_NAME = "Marcassin"
+
+bot = Cinch::Bot.new do
+  configure do |c|
+    c.nick = BOT_NAME # Le nom du bot
+    c.realname = "Marcassin Sanglier" # Le nom réel du bot
+    c.delay_joins = 5 # Un temps d'attente avant de rejoindre un chan
+    c.messages_per_second = 1.0 # messages par seconde,  pour éviter de se faire kick pour flood
+    c.server_queue_size = 1 # Un message par cible pour du round robin, évite de se faire kick
+    c.server = "irc.freenode.org"
+    c.channels = ["#provlux"]
+  end
+
+  on :message, GREETINGS_INPUT_REGEXP do |m|
+    m.reply GREETINGS_OUTPUT.sample
+  end
+
+  on :message, 'ping' do |m|
+    m.reply 'pong'
+  end
+
+  on :message, /#{BOT_NAME}( )?(\?)?/ do |m|
+    m.reply 'Oui?'
+  end
+end
+
+bot.start
