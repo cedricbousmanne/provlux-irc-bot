@@ -1,6 +1,6 @@
 require 'cinch'
 
-GREETINGS_INPUT_REGEXP = /((h|H)i|(s|S)alut|(c|C)oucou|(h|H)ello|(y|Y)ellow|(P|p)lop|(B|b)onjour)(.*?)/
+GREETINGS_INPUT_REGEXP = /(hi|salut|coucou|hello|yellow|plop|bonjour)(.*?)/i
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
 
 bot = Cinch::Bot.new do
