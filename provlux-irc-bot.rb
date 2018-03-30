@@ -2,7 +2,6 @@ require 'cinch'
 
 GREETINGS_INPUT_REGEXP = /((h|H)i|(s|S)alut|(c|C)oucou|(h|H)ello|(y|Y)ellow|(P|p)lop)(.*?)/
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
-BOT_NAME = "Marcassin"
 
 bot = Cinch::Bot.new do
   configure do |c|
@@ -13,6 +12,8 @@ bot = Cinch::Bot.new do
     c.server_queue_size = 1 # Un message par cible pour du round robin, évite de se faire kick
     c.server = "irc.freenode.org"
     c.channels = ["#provlux"]
+    c.sasl.username = BOT_NAME
+    c.sasl.password = BOT_PASSWORD
   end
 
   on :message, GREETINGS_INPUT_REGEXP do |m|
