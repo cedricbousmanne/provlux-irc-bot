@@ -4,6 +4,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'cgi'
 
+include Cinch::Commands
+
 GREETINGS_INPUT_REGEXP = /(hi|salut|coucou|hello|yellow|plop|bonjour)(.*?)/i
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
 
