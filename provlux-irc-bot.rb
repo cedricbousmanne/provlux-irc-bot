@@ -66,7 +66,7 @@ bot = Cinch::Bot.new do
     m.reply "Bonjour #{dad_joke_surname}, je suis #{ENV['BOT_NAME']}"
   end
 
-  on :message, /^!meteo (.*)+/, do |m, area|
+  on :message, /^!meteo (.*)+/ do |m, area|
     forecast = get_weather(area)
     m.reply forecast
   end
