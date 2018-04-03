@@ -1,7 +1,29 @@
 require 'cinch'
+require 'nokogiri'
+require 'open-uri'
+require 'cgi'
 
 GREETINGS_INPUT_REGEXP = /(hi|salut|coucou|hello|yellow|plop|bonjour)(.*?)/i
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
+
+def get_weather(area)
+  url       = "http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query=#{CGI.escape(area)}"
+  document  = Nokogiri::XML(open(url))
+  
+  qualitive = document.css('fcttext')
+  
+  document.css("simpleforecast forecastday").each_with_index do |forecastday, i|
+    highs = forecastday.css('high')
+    lows  = forecastday.css('low')
+    
+    "\n"
+    + forecastday.css("date weekday").first.content
+    + "\n"
+    + " High: #{highs.css('celsius').first.content} C \n"
+    + " Low:  #{lows.css('celsius').first.content} C   \n"
+    + " #{qualitive[i].content} \n" if qualitive[i]
+  end
+end
 
 bot = Cinch::Bot.new do
   configure do |c|
@@ -42,6 +64,11 @@ bot = Cinch::Bot.new do
 
   on :message, /^Je suis (\S+)$/i do |m, dad_joke_surname|
     m.reply "Bonjour #{dad_joke_surname}, je suis #{ENV['BOT_NAME']}"
+  end
+
+  on :message, /^!meteo (.*)+/, do |m, area|
+    forecast = get_weather(area)
+    m.reply forecast
   end
 end
 
