@@ -78,7 +78,7 @@ bot = Cinch::Bot.new do
   end
 
   command :meteo, {area: :string},
-    summary: "Affiche les prévisions météo de <area>",
+    summary: "Affiche les prévisions météo de <area>"
 end
 
 bot.start
