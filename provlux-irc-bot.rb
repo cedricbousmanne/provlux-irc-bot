@@ -1,35 +1,28 @@
 require 'cinch'
-require 'cinch/commands'
 require 'nokogiri'
 require 'open-uri'
 require 'cgi'
 
-include Cinch::Commands
-
 GREETINGS_INPUT_REGEXP = /(hi|salut|coucou|hello|yellow|plop|bonjour)(.*?)/i
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
 
-def meteo(area)
+def get_weather(m, area)
   url       = "http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query=#{CGI.escape(area)}"
   document  = Nokogiri::XML(open(url))
   
   qualitive = document.css('fcttext')
-
-  str = ""
   
   document.css("simpleforecast forecastday").each_with_index do |forecastday, i|
     highs = forecastday.css('high')
     lows  = forecastday.css('low')
     
-    str += "\n"
-    str += forecastday.css("date weekday").first.content
-    str += "\n"
-    str += " High: #{highs.css('celsius').first.content} C \n"
-    str += " Low:  #{lows.css('celsius').first.content} C   \n"
-    str += " #{qualitive[i].content} \n" if qualitive[i]
+    m.reply "\n"
+    m.reply forecastday.css("date weekday").first.content
+    m.reply "\n"
+    m.reply " High: #{highs.css('celsius').first.content} C \n"
+    m.reply " Low:  #{lows.css('celsius').first.content} C   \n"
+    m.reply " #{qualitive[i].content} \n" if qualitive[i]
   end
-
-  str
 
 end
 
@@ -74,13 +67,9 @@ bot = Cinch::Bot.new do
     m.reply "Bonjour #{dad_joke_surname}, je suis #{ENV['BOT_NAME']}"
   end
 
-  on :message, /^!meteo (.*)+/ do |m, area|
-    forecast = get_weather(area)
-    m.reply forecast
+  on :message, /^\!meteo (.*+)$/ do |m, area|
+    forecast = get_weather(m, area)
   end
-
-  command :meteo, {area: :string},
-    summary: "Affiche les prévisions météo de <area>"
 end
 
 bot.start
