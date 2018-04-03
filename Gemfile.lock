@@ -2,6 +2,8 @@ GEM
   remote: http://rubygems.org/
   specs:
     cinch (2.3.4)
+    cinch-commands (0.1.0)
+      cinch (~> 2.0)
     mini_portile2 (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -11,6 +13,7 @@ PLATFORMS
 
 DEPENDENCIES
   cinch
+  cinch-commands
   nokogiri
 
 BUNDLED WITH

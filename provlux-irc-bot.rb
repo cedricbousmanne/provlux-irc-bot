@@ -1,4 +1,5 @@
 require 'cinch'
+require 'cinch/commands'
 require 'nokogiri'
 require 'open-uri'
 require 'cgi'
@@ -6,7 +7,7 @@ require 'cgi'
 GREETINGS_INPUT_REGEXP = /(hi|salut|coucou|hello|yellow|plop|bonjour)(.*?)/i
 GREETINGS_OUTPUT = %w(Hello! Bonjour Salutations Hey! Yo Yop Bello!)
 
-def get_weather(area)
+def meteo(area)
   url       = "http://api.wunderground.com/auto/wui/geo/ForecastXML/index.xml?query=#{CGI.escape(area)}"
   document  = Nokogiri::XML(open(url))
   
@@ -27,7 +28,7 @@ def get_weather(area)
   end
 
   str
-  
+
 end
 
 bot = Cinch::Bot.new do
@@ -75,6 +76,9 @@ bot = Cinch::Bot.new do
     forecast = get_weather(area)
     m.reply forecast
   end
+
+  command :meteo, {area: :string},
+    summary: "Affiche les prévisions météo de <area>",
 end
 
 bot.start
