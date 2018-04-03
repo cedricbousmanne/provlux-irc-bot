@@ -11,18 +11,23 @@ def get_weather(area)
   document  = Nokogiri::XML(open(url))
   
   qualitive = document.css('fcttext')
+
+  str = ""
   
   document.css("simpleforecast forecastday").each_with_index do |forecastday, i|
     highs = forecastday.css('high')
     lows  = forecastday.css('low')
     
-    "\n"
-    + forecastday.css("date weekday").first.content
-    + "\n"
-    + " High: #{highs.css('celsius').first.content} C \n"
-    + " Low:  #{lows.css('celsius').first.content} C   \n"
-    + " #{qualitive[i].content} \n" if qualitive[i]
+    str += "\n"
+    str += forecastday.css("date weekday").first.content
+    str += "\n"
+    str += " High: #{highs.css('celsius').first.content} C \n"
+    str += " Low:  #{lows.css('celsius').first.content} C   \n"
+    str += " #{qualitive[i].content} \n" if qualitive[i]
   end
+
+  str
+  
 end
 
 bot = Cinch::Bot.new do
